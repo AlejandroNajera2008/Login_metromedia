@@ -1,0 +1,152 @@
+/* Fix general sizing and prevent overflow */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+:root{
+  --bg:#0b1020;
+  --panel:#111a2f;
+  --input:#1f2a3d;
+  --blue:#3b82f6;
+  --blue-strong:#2563eb;
+  --blue-glow: rgba(59,130,246,.55);
+  --text:#e6efff;
+  --muted:#9ab0cc;
+}
+
+html,body{
+  height:100%;
+}
+
+body{
+  margin:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: radial-gradient(1200px 600px at 50% -10%, #0f1b39 0%, var(--bg) 60%);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+}
+
+/* Card */
+.login-box{
+  width: min(92vw, 300px);
+  padding: 36px 28px 28px;
+  background: var(--panel);
+  border: 1px solid rgba(59,130,246,.5);
+  border-radius: 14px;
+  box-shadow:
+    0 0 0 2px rgba(59,130,246,.08) inset,
+    0 0 25px 4px rgba(4,118,255,.18);
+  animation: cardGlow 4.5s ease-in-out infinite;
+}
+
+/* Title + glow animation */
+.login-box h2{
+  margin: 0 0 22px;
+  text-align:center;
+  letter-spacing:.5px;
+  color: var(--blue);
+  text-shadow: 0 0 10px var(--blue-glow);
+  animation: titleGlow 4.5s ease-in-out infinite;
+}
+
+/* Input with icon (flex layout to avoid overflow) */
+.input-container{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  margin: 14px 0;
+  background: var(--input);
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: box-shadow .25s ease, border-color .25s ease, transform .12s ease;
+}
+
+.input-container i{
+  font-size: 16px;
+  color: #77a6ff;
+  min-width: 16px;
+  text-align:center;
+  transition: color .25s ease;
+}
+
+.input-container input{
+  flex: 1 1 auto;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.95rem;
+  padding: 0; /* ya tenemos padding en el contenedor */
+}
+
+/* Placeholder fade */
+.input-container input::placeholder{
+  color: var(--muted);
+  transition: opacity .35s ease;
+}
+.input-container input:focus::placeholder{
+  opacity: 0;
+}
+
+/* Focus state: glow + icon highlight */
+.input-container:focus-within{
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(59,130,246,.15), 0 0 16px var(--blue-glow);
+  transform: translateZ(0); /* micro-anticlip */
+}
+.input-container:focus-within i{
+  color: var(--blue);
+}
+
+/* Button */
+.btn{
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 800;
+  letter-spacing:.5px;
+  color: #fff;
+  background: var(--blue);
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .25s ease, background .25s ease;
+  box-shadow: 0 6px 18px rgba(59,130,246,.35);
+}
+.btn:hover{
+  background: var(--blue-strong);
+  box-shadow: 0 8px 22px rgba(59,130,246,.45);
+}
+.btn:active{
+  transform: translateY(1px);
+}
+
+/* Link */
+.forgot{
+  display:block;
+  margin-top: 16px;
+  text-align:center;
+  color:#87b3ff;
+  text-decoration:none;
+}
+.forgot:hover{
+  color:#bcd3ff;
+  text-decoration:underline;
+}
+
+/* --- Animations --- */
+@keyframes cardGlow{
+  0%   { box-shadow: 0 0 0 2px rgba(59,130,246,.08) inset, 0 0 18px 2px rgba(4,118,255,.12); }
+  50%  { box-shadow: 0 0 0 2px rgba(59,130,246,.10) inset, 0 0 32px 6px rgba(4,118,255,.22); }
+  100% { box-shadow: 0 0 0 2px rgba(59,130,246,.08) inset, 0 0 18px 2px rgba(4,118,255,.12); }
+}
+
+@keyframes titleGlow{
+  0%,100% { text-shadow: 0 0 10px var(--blue-glow), 0 0 2px rgba(59,130,246,.35); }
+  50%     { text-shadow: 0 0 18px var(--blue-glow), 0 0 6px rgba(59,130,246,.45); }
+}
+
+
